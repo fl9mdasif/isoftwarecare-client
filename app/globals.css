@@ -27,7 +27,103 @@
   --radius: 14px;
   --radius-lg: 22px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Foreground for text sitting ON an accent fill. Not the same as --bg once a
+     light theme exists, so it has to be its own token. */
+  --on-accent: #06070a;
+  --grad-3: #a99bff;
+
+  /* Elevation. In dark this is a white sheen; in light it becomes a real card
+     plus a shadow, because a white sheen on a light surface is invisible. */
+  --glass-top: rgba(255, 255, 255, 0.045);
+  --glass-bot: rgba(255, 255, 255, 0.01);
+  --glass-top-strong: rgba(255, 255, 255, 0.055);
+  --sheen: rgba(255, 255, 255, 0.06);
+  --tint-1: rgba(255, 255, 255, 0.03);
+  --tint-2: rgba(255, 255, 255, 0.012);
+  --tint-3: rgba(255, 255, 255, 0.015);
+  --tint-4: rgba(255, 255, 255, 0.04);
+  --grid-line: rgba(255, 255, 255, 0.03);
+  --dot-pattern: rgba(255, 255, 255, 0.5);
+  --shadow-card: none;
+  --shadow-pop: 0 18px 40px rgba(0, 0, 0, 0.4);
+
+  /* Chrome and scrims. */
+  --header-bg: rgba(8, 9, 13, 0.72);
+  --panel-bg: rgba(6, 7, 10, 0.97);
+  --overlay-bg: rgba(13, 15, 21, 0.86);
+  --scrim: rgba(6, 7, 10, 0.55);
+  --scrim-soft: rgba(6, 7, 10, 0.5);
+  --img-veil: rgba(6, 7, 10, 0.7);
+  --img-veil-border: rgba(255, 255, 255, 0.18);
+
+  /* Ambient layer. */
+  --blob-a: rgba(108, 92, 255, 0.45);
+  --blob-b: rgba(46, 230, 197, 0.26);
+  --blob-c: rgba(108, 92, 255, 0.22);
+  --blob-opacity: 0.5;
+  --grain-opacity: 0.38;
+  --grain-blend: overlay;
+
   color-scheme: dark;
+}
+
+/*
+ * Light theme.
+ *
+ * Not a token inversion. On a light surface, elevation has to come from real
+ * cards plus shadow rather than a white sheen, and the acid accent is far too
+ * pale for text — #2ee6c5 on white is about 1.6:1, so it is darkened to a teal
+ * that clears 4.5:1 while staying recognisably the same hue.
+ */
+:root[data-theme="light"] {
+  --bg: #f4f6fb;
+  --surface: #ffffff;
+  --surface-2: #eef1f7;
+  --border: rgba(16, 22, 38, 0.1);
+  --border-strong: rgba(16, 22, 38, 0.22);
+  --text: #0c1020;
+  --text-mid: #475069;
+  --text-dim: #61697d;
+  --violet: #5341e0;
+  --violet-dim: rgba(83, 65, 224, 0.1);
+  --acid: #047762;
+  --acid-dim: rgba(4, 119, 98, 0.1);
+  --danger: #cf3350;
+
+  --on-accent: #ffffff;
+  --grad-3: #6f5be0;
+
+  --glass-top: rgba(255, 255, 255, 0.98);
+  --glass-bot: rgba(246, 248, 252, 0.92);
+  --glass-top-strong: rgba(255, 255, 255, 1);
+  --sheen: rgba(16, 22, 38, 0.05);
+  --tint-1: rgba(16, 22, 38, 0.035);
+  --tint-2: rgba(16, 22, 38, 0.02);
+  --tint-3: rgba(16, 22, 38, 0.025);
+  --tint-4: rgba(16, 22, 38, 0.045);
+  --grid-line: rgba(16, 22, 38, 0.05);
+  --dot-pattern: rgba(16, 22, 38, 0.16);
+  --shadow-card: 0 1px 2px rgba(16, 22, 38, 0.05), 0 10px 28px rgba(16, 22, 38, 0.07);
+  --shadow-pop: 0 18px 40px rgba(16, 22, 38, 0.16);
+
+  --header-bg: rgba(255, 255, 255, 0.8);
+  --panel-bg: rgba(248, 250, 253, 0.98);
+  --overlay-bg: rgba(255, 255, 255, 0.92);
+  /* Scrims stay dark: they sit over photography in both themes. */
+  --scrim: rgba(10, 14, 28, 0.5);
+  --scrim-soft: rgba(10, 14, 28, 0.42);
+  --img-veil: rgba(10, 14, 28, 0.62);
+  --img-veil-border: rgba(255, 255, 255, 0.28);
+
+  --blob-a: rgba(83, 65, 224, 0.16);
+  --blob-b: rgba(13, 146, 118, 0.12);
+  --blob-c: rgba(83, 65, 224, 0.09);
+  --blob-opacity: 0.55;
+  --grain-opacity: 0.14;
+  --grain-blend: multiply;
+
+  color-scheme: light;
 }
 
 @theme inline {
@@ -132,8 +228,8 @@ textarea {
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  opacity: 0.38;
-  mix-blend-mode: overlay;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
 }
 .aurora {
@@ -147,28 +243,28 @@ textarea {
   position: absolute;
   border-radius: 50%;
   filter: blur(90px);
-  opacity: 0.5;
+  opacity: var(--blob-opacity);
 }
 .blob-a {
   width: 620px;
   height: 620px;
   top: -220px;
   right: -180px;
-  background: radial-gradient(circle, rgba(108, 92, 255, 0.45), transparent 68%);
+  background: radial-gradient(circle, var(--blob-a), transparent 68%);
 }
 .blob-b {
   width: 520px;
   height: 520px;
   top: 52%;
   left: -220px;
-  background: radial-gradient(circle, rgba(46, 230, 197, 0.26), transparent 68%);
+  background: radial-gradient(circle, var(--blob-b), transparent 68%);
 }
 .blob-c {
   width: 460px;
   height: 460px;
   bottom: -160px;
   right: 6%;
-  background: radial-gradient(circle, rgba(108, 92, 255, 0.22), transparent 70%);
+  background: radial-gradient(circle, var(--blob-c), transparent 70%);
 }
 main,
 .site-header,
@@ -221,10 +317,10 @@ footer {
 }
 .btn-solid {
   background: var(--acid);
-  color: #06070a;
+  color: var(--on-accent);
 }
 .btn-solid:hover {
-  background: #4ff0d4;
+  background: color-mix(in srgb, var(--acid) 88%, #fff);
   transform: translateY(-2px);
 }
 .btn-ghost {
@@ -325,7 +421,7 @@ footer {
 }
 
 .grad {
-  background: linear-gradient(100deg, var(--acid) 0%, var(--violet) 55%, #a99bff 100%);
+  background: linear-gradient(100deg, var(--acid) 0%, var(--violet) 55%, var(--grad-3) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -336,6 +432,45 @@ footer {
 }
 body.gsap-ready .reveal {
   opacity: 0;
+}
+
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.theme-toggle:hover {
+  color: var(--acid);
+  border-color: var(--border-strong);
+}
+.theme-toggle svg {
+  width: 17px;
+  height: 17px;
+}
+/* Both icons ship; the inactive one is hidden so the button never resizes. */
+.theme-toggle .ico-sun {
+  display: none;
+}
+:root[data-theme="light"] .theme-toggle .ico-sun {
+  display: block;
+}
+:root[data-theme="light"] .theme-toggle .ico-moon {
+  display: none;
+}
+.theme-toggle.mobile-theme {
+  width: 100%;
+  height: 46px;
+  border-radius: var(--radius);
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
 /* ---------- header ---------- */
@@ -349,7 +484,7 @@ body.gsap-ready .reveal {
   border-bottom: 1px solid transparent;
 }
 .site-header.stuck {
-  background: rgba(8, 9, 13, 0.72);
+  background: var(--header-bg);
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
   border-bottom-color: var(--border);
@@ -454,7 +589,7 @@ body.gsap-ready .reveal {
   position: fixed;
   inset: 0;
   z-index: 49;
-  background: rgba(6, 7, 10, 0.97);
+  background: var(--panel-bg);
   backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
@@ -564,7 +699,7 @@ body.gsap-ready .reveal {
   position: relative;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
-  background: linear-gradient(165deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.012));
+  background: linear-gradient(165deg, var(--glass-top-strong), var(--glass-bot));
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   padding: 22px;
@@ -621,7 +756,7 @@ body.gsap-ready .reveal {
   color: var(--acid);
 }
 .term .v {
-  color: #a99bff;
+  color: var(--grad-3);
 }
 .term .c {
   color: var(--text-dim);
@@ -644,11 +779,11 @@ body.gsap-ready .reveal {
   border-radius: 999px;
   border: 1px solid var(--border);
   color: var(--text-mid);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--tint-1);
   white-space: nowrap;
 }
 .chip.on {
-  border-color: rgba(46, 230, 197, 0.45);
+  border-color: color-mix(in srgb, var(--acid) 45%, transparent);
   color: var(--acid);
   background: var(--acid-dim);
 }
@@ -661,7 +796,7 @@ button.chip:hover {
   color: var(--text);
 }
 button.chip.on:hover {
-  border-color: rgba(46, 230, 197, 0.6);
+  border-color: color-mix(in srgb, var(--acid) 60%, transparent);
   color: var(--acid);
 }
 .float-stat {
@@ -673,7 +808,7 @@ button.chip.on:hover {
   border-radius: 14px;
   border: 1px solid var(--border-strong);
   padding: 13px 17px;
-  background: rgba(13, 15, 21, 0.86);
+  background: var(--overlay-bg);
   backdrop-filter: blur(10px);
 }
 .float-stat .pulse {
@@ -682,7 +817,7 @@ button.chip.on:hover {
   border-radius: 50%;
   background: var(--acid);
   flex-shrink: 0;
-  box-shadow: 0 0 0 4px rgba(46, 230, 197, 0.18);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--acid) 18%, transparent);
 }
 .float-stat small {
   display: block;
@@ -742,7 +877,7 @@ button.chip.on:hover {
   border-block: 1px solid var(--border);
   padding-block: 20px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.015);
+  background: var(--tint-3);
 }
 .marquee {
   display: flex;
@@ -800,10 +935,11 @@ button.chip.on:hover {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 30px 26px 32px;
-  background: linear-gradient(170deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.008));
+  background: linear-gradient(170deg, var(--glass-top), var(--glass-bot));
   overflow: hidden;
   transition: border-color 0.35s, transform 0.35s var(--ease);
   will-change: transform;
+  box-shadow: var(--shadow-card);
 }
 .svc-grid {
   perspective: 1200px;
@@ -854,7 +990,7 @@ button.chip.on:hover {
   opacity: 0;
   transition: opacity 0.4s;
   pointer-events: none;
-  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(108, 92, 255, 0.16), transparent 62%);
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--violet) 16%, transparent), transparent 62%);
 }
 .svc:hover {
   border-color: var(--border-strong);
@@ -871,16 +1007,16 @@ button.chip.on:hover {
   place-items: center;
   margin-bottom: 20px;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--tint-4);
   color: var(--acid);
   overflow: hidden;
   transition: transform 0.4s var(--ease), border-color 0.3s, box-shadow 0.3s, background 0.3s;
 }
 .svc:hover .svc-ico {
   transform: translateY(-2px) rotate(-6deg);
-  border-color: rgba(46, 230, 197, 0.45);
+  border-color: color-mix(in srgb, var(--acid) 45%, transparent);
   background: var(--acid-dim);
-  box-shadow: 0 0 20px rgba(46, 230, 197, 0.22);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--acid) 22%, transparent);
 }
 .svc-ico svg {
   width: 20px;
@@ -944,8 +1080,8 @@ button.chip.on:hover {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
   background-size: 44px 44px;
   mask-image: radial-gradient(ellipse at 50% 55%, #000 30%, transparent 85%);
   -webkit-mask-image: radial-gradient(ellipse at 50% 55%, #000 30%, transparent 85%);
@@ -975,7 +1111,7 @@ button.chip.on:hover {
   display: block;
   border-radius: inherit;
   background: linear-gradient(180deg, var(--acid), var(--violet));
-  box-shadow: 0 0 12px rgba(46, 230, 197, 0.45), 0 0 26px rgba(108, 92, 255, 0.25);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--acid) 45%, transparent), 0 0 26px color-mix(in srgb, var(--violet) 25%, transparent);
   transform-origin: top center;
 }
 .steps {
@@ -1063,7 +1199,7 @@ button.chip.on:hover {
   padding: 20px 24px 18px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: linear-gradient(170deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.01));
+  background: linear-gradient(170deg, var(--glass-top), var(--glass-bot));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   overflow: hidden;
@@ -1088,7 +1224,7 @@ button.chip.on:hover {
 .step.active .step-card {
   transform: translateY(-4px);
   border-color: var(--accent-soft);
-  background: linear-gradient(170deg, color-mix(in srgb, var(--accent) 7%, transparent), rgba(255, 255, 255, 0.01));
+  background: linear-gradient(170deg, color-mix(in srgb, var(--accent) 7%, transparent), var(--glass-bot));
 }
 .step-card > * {
   position: relative;
@@ -1240,6 +1376,7 @@ button.chip.on:hover {
   background: var(--surface);
   transition: border-color 0.35s, transform 0.4s var(--ease);
   will-change: transform;
+  box-shadow: var(--shadow-card);
 }
 .work:hover {
   border-color: var(--border-strong);
@@ -1274,7 +1411,7 @@ button.chip.on:hover {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(180deg, transparent 45%, rgba(6, 7, 10, 0.55));
+  background: linear-gradient(180deg, transparent 45%, var(--scrim));
 }
 .work-vis img {
   position: absolute;
@@ -1303,8 +1440,8 @@ button.chip.on:hover {
   font-size: 0.66rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: rgba(6, 7, 10, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: var(--img-veil);
+  border: 1px solid var(--img-veil-border);
   color: #fff;
   padding: 6px 11px;
   border-radius: 999px;
@@ -1387,8 +1524,8 @@ button.chip.on:hover {
   min-height: 460px;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  background: linear-gradient(170deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.01)), var(--surface);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background: linear-gradient(170deg, var(--glass-top), var(--glass-bot)), var(--surface);
+  box-shadow: inset 0 1px 0 var(--sheen);
   overflow: hidden;
   scale: var(--stack-s, 1);
   filter: brightness(var(--stack-b, 1));
@@ -1533,7 +1670,7 @@ button.chip.on:hover {
   padding: 8px 14px;
   border: 1px solid var(--border-strong);
   border-radius: 999px;
-  background: rgba(13, 15, 21, 0.86);
+  background: var(--overlay-bg);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   font-family: var(--mono);
@@ -1604,7 +1741,7 @@ button.chip.on:hover {
   grid-template-columns: repeat(4, 1fr);
   gap: 28px;
   text-align: center;
-  background: linear-gradient(150deg, rgba(108, 92, 255, 0.12), rgba(46, 230, 197, 0.05));
+  background: linear-gradient(150deg, color-mix(in srgb, var(--violet) 12%, transparent), color-mix(in srgb, var(--acid) 5%, transparent));
   position: relative;
   overflow: hidden;
 }
@@ -1651,6 +1788,7 @@ button.chip.on:hover {
   position: relative;
   display: flex;
   flex-direction: column;
+  box-shadow: var(--shadow-card);
 }
 .testi-top {
   display: flex;
@@ -1727,7 +1865,7 @@ button.chip.on:hover {
   text-align: center;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(155deg, rgba(108, 92, 255, 0.2), rgba(46, 230, 197, 0.07));
+  background: linear-gradient(155deg, color-mix(in srgb, var(--violet) 20%, transparent), color-mix(in srgb, var(--acid) 7%, transparent));
 }
 @media (max-width: 700px) {
   .cta {
@@ -1739,7 +1877,7 @@ button.chip.on:hover {
   position: absolute;
   inset: 0;
   opacity: 0.3;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+  background-image: radial-gradient(circle, var(--dot-pattern) 1px, transparent 1px);
   background-size: 24px 24px;
   mask-image: radial-gradient(circle at 50% 50%, #000, transparent 72%);
   -webkit-mask-image: radial-gradient(circle at 50% 50%, #000, transparent 72%);
@@ -1822,6 +1960,7 @@ button.chip.on:hover {
   padding: 26px;
   position: sticky;
   top: 100px;
+  box-shadow: var(--shadow-card);
 }
 .aside-card h3,
 .aside-card h2 {
@@ -1885,7 +2024,7 @@ button.chip.on:hover {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 60%, rgba(6, 7, 10, 0.5));
+  background: linear-gradient(180deg, transparent 60%, var(--scrim-soft));
   pointer-events: none;
 }
 .gallery {
@@ -1942,11 +2081,11 @@ button.chip.on:hover {
   padding: 16px 18px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: linear-gradient(170deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.008));
+  background: linear-gradient(170deg, var(--glass-top), var(--glass-bot));
   transition: border-color 0.3s, transform 0.3s var(--ease);
 }
 .channels a:hover {
-  border-color: rgba(46, 230, 197, 0.4);
+  border-color: color-mix(in srgb, var(--acid) 40%, transparent);
   transform: translateX(4px);
 }
 .channels .ch-ico {
@@ -2002,9 +2141,10 @@ button.chip.on:hover {
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-lg);
   padding: 34px;
-  background: linear-gradient(165deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012));
+  background: linear-gradient(165deg, var(--glass-top-strong), var(--glass-bot));
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  box-shadow: var(--shadow-card);
 }
 @media (max-width: 600px) {
   .form-card {
@@ -2138,9 +2278,9 @@ select.input option {
   display: grid;
   place-items: center;
   background: var(--acid-dim);
-  border: 1px solid rgba(46, 230, 197, 0.45);
+  border: 1px solid color-mix(in srgb, var(--acid) 45%, transparent);
   color: var(--acid);
-  box-shadow: 0 0 30px rgba(46, 230, 197, 0.25);
+  box-shadow: 0 0 30px color-mix(in srgb, var(--acid) 25%, transparent);
 }
 .sent-ico svg {
   width: 26px;
@@ -2194,6 +2334,7 @@ select.input option {
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--acid);
+  box-shadow: var(--shadow-card);
 }
 .expect-ico svg {
   width: 17px;
@@ -2264,6 +2405,7 @@ select.input option {
   border-radius: var(--radius-lg);
   background: var(--surface);
   overflow: hidden;
+  box-shadow: var(--shadow-card);
 }
 @media (max-width: 620px) {
   .cal-inline {
@@ -2325,8 +2467,9 @@ select.input option {
   padding: 28px 26px 30px;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012));
+  background: linear-gradient(160deg, var(--glass-top), var(--glass-bot));
   transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+  box-shadow: var(--shadow-card);
 }
 @media (hover: hover) and (pointer: fine) {
   .principle:hover {
@@ -2428,6 +2571,7 @@ select.input option {
   border-radius: var(--radius-lg);
   background: var(--surface);
   padding: 24px 22px;
+  box-shadow: var(--shadow-card);
 }
 @media (max-width: 960px) {
   .legal-toc {
@@ -2590,7 +2734,7 @@ footer {
   border-top: 1px solid var(--border);
   padding: 64px 0 30px;
   margin-top: var(--sp-7);
-  background: rgba(255, 255, 255, 0.012);
+  background: var(--tint-2);
 }
 .foot-grid {
   display: grid;

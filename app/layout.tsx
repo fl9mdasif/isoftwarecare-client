@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/Header";
 import { Providers } from "@/components/layout/Providers";
 import { Analytics, GtmNoScript } from "@/components/analytics/Analytics";
 import { JsonLd } from "@/components/ui/JsonLd";
+import { ThemeScript } from "@/components/theme/ThemeScript";
 import { organizationSchema } from "@/lib/schema";
 import { getServices, getSettings } from "@/lib/api";
 import { SITE } from "@/lib/site";
@@ -50,13 +51,22 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export const viewport: Viewport = { themeColor: "#06070A", colorScheme: "dark" };
+export const viewport: Viewport = {
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#06070A" },
+    { media: "(prefers-color-scheme: light)", color: "#F4F6FB" },
+  ],
+};
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [settings, services] = await Promise.all([getSettings(), getServices()]);
 
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`} suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+      </head>
       <body>
         <GtmNoScript gtmId={settings.gtmId} />
         <a href="#main" className="skip-link">

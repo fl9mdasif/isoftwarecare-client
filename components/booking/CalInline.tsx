@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Cal, { getCalApi } from "@calcom/embed-react";
 import { CAL } from "@/lib/site";
+import { useTheme } from "@/components/theme/useTheme";
 
 const NAMESPACE = "inline";
 
@@ -18,6 +19,7 @@ type Props = {
  */
 export function CalInline({ prefill }: Props) {
   const [ready, setReady] = useState(false);
+  const theme = useTheme();
 
   useEffect(() => {
     if (!CAL.link) return;
@@ -26,11 +28,11 @@ export function CalInline({ prefill }: Props) {
       const cal = await getCalApi({ namespace: NAMESPACE });
       if (cancelled) return;
       cal("ui", {
-        theme: "dark",
+        theme,
         hideEventTypeDetails: false,
         layout: "month_view",
         cssVarsPerTheme: {
-          light: { "cal-brand": "#2EE6C5" },
+          light: { "cal-brand": "#047762" },
           dark: { "cal-brand": "#2EE6C5" },
         },
       });
@@ -39,7 +41,7 @@ export function CalInline({ prefill }: Props) {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [theme]);
 
   if (!CAL.link) return null;
 
@@ -50,7 +52,7 @@ export function CalInline({ prefill }: Props) {
         calLink={CAL.link}
         calOrigin={CAL.origin}
         style={{ width: "100%", height: "100%", overflow: "scroll" }}
-        config={{ layout: "month_view", theme: "dark", ...prefill }}
+        config={{ layout: "month_view", theme, ...prefill }}
       />
       <p className="cal-fallback">
         Calendar not loading?{" "}

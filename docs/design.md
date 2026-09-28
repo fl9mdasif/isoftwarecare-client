@@ -12,11 +12,48 @@ Tone of copy: plain, specific, accountable. No hype words ("revolutionary", "cut
 
 All tokens live as CSS custom properties on `:root` in `app/globals.css`. Never hard-code a color or radius in a component; use a token.
 
-### Surfaces
+**Two themes.** `:root` holds the dark values; `:root[data-theme="light"]` overrides them. Nothing else in the stylesheet may contain a raw colour, because a literal cannot follow the theme. The only permitted exceptions are:
 
-| Token | Value | Use |
-|---|---|---|
-| `--bg` | `#06070A` | Page background |
+- mask-image colours (`#000`) — alpha only, the hue is never rendered
+- the `.w1` / `.w2` / `.w3` brand gradients, which act as artwork in both themes
+- white marks sitting on those gradients
+
+Accent-derived tints use `color-mix(in srgb, var(--acid) N%, transparent)` rather than a baked `rgba()`, so a glow tracks the theme's accent.
+
+### Theme-specific tokens
+
+| Token | Purpose |
+|---|---|
+| `--on-accent` | Text on an accent fill. Near-black in dark, white in light — not the same as `--bg` |
+| `--glass-top` / `--glass-bot` / `--glass-top-strong` | Card sheen. A white sheen in dark; a near-white card in light |
+| `--shadow-card` | `none` in dark, a soft shadow in light. Light themes convey elevation with shadow, not sheen |
+| `--shadow-pop` | Floating elements (toasts) |
+| `--sheen`, `--tint-1..4` | Subtle surface fills |
+| `--grid-line`, `--dot-pattern` | Decorative patterns |
+| `--header-bg`, `--panel-bg`, `--overlay-bg` | Translucent chrome |
+| `--scrim`, `--scrim-soft`, `--img-veil`, `--img-veil-border` | Overlays on photography — these stay dark in **both** themes |
+| `--blob-a/b/c`, `--blob-opacity` | Aurora blobs, heavily reduced in light |
+| `--grain-opacity`, `--grain-blend` | Film grain: `overlay` in dark, `multiply` at low opacity in light |
+| `--grad-3` | Third stop of the `.grad` text gradient |
+
+### Light theme is not an inversion
+
+Two things genuinely change rather than flip:
+
+1. **Accent contrast.** `--acid: #2ee6c5` is roughly 1.6:1 on white — unusable for text. Light uses `#047762`, which clears 4.5:1 while reading as the same hue. `--violet` darkens to `#5341e0` for the same reason.
+2. **Elevation.** A white sheen over a light surface is invisible, so light swaps the glass gradient for a near-white card plus `--shadow-card`.
+
+### Runtime
+
+`components/theme/ThemeScript.tsx` is a blocking inline script in `<head>`: it reads `localStorage.theme`, falls back to `prefers-color-scheme`, and sets `data-theme` on `<html>` **before first paint**. Doing this in an effect would flash the dark default on every navigation for a light-theme visitor. `<html>` therefore carries `suppressHydrationWarning`.
+
+`ThemeToggle` writes the choice to `localStorage` and flips the attribute. While no explicit choice is stored, the OS preference is followed live. `useTheme()` observes the attribute for anything that needs to react in JS — currently the Cal.com embeds, which would otherwise stay pinned to dark on a light page.
+
+### Surfaces (dark / light)
+
+| Token | Dark | Light | Use |
+|---|---|---|---|
+| `--bg` | `#06070A` | `#F4F6FB` | Page background |
 | `--surface` | `#0D0F15` | Cards, alternate section background |
 | `--surface-2` | `#12151D` | Inputs, nested panels |
 | `--border` | `rgba(255,255,255,.085)` | Default 1px border |

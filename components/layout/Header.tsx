@@ -7,6 +7,7 @@ import { NAV, SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/ui/Icon";
 import { BookMeeting } from "@/components/booking/BookMeeting";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 export function Header() {
   const pathname = usePathname();
@@ -47,6 +48,7 @@ export function Header() {
               ))}
             </div>
             <div className="nav-actions">
+              <ThemeToggle />
               <BookMeeting className="btn-sm" />
               <button
                 type="button"
@@ -74,6 +76,7 @@ export function Header() {
             {n.label}
           </Link>
         ))}
+        <ThemeToggle className="mobile-theme" />
         <BookMeeting className="mobile-cta" onOpen={() => setOpen(false)} />
       </div>
     </>

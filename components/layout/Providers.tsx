@@ -10,15 +10,18 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <Toaster
         position="bottom-right"
         toastOptions={{
+          // Design tokens rather than literals, so toasts follow the theme
+          // instead of staying dark on a light page.
           style: {
-            background: "#12151D",
-            color: "#F4F6FA",
-            border: "1px solid rgba(255,255,255,.16)",
-            borderRadius: "14px",
+            background: "var(--surface-2)",
+            color: "var(--text)",
+            border: "1px solid var(--border-strong)",
+            borderRadius: "var(--radius)",
+            boxShadow: "var(--shadow-pop)",
             fontSize: ".9rem",
           },
-          success: { iconTheme: { primary: "#2EE6C5", secondary: "#06070A" } },
-          error: { iconTheme: { primary: "#FF6B81", secondary: "#06070A" } },
+          success: { iconTheme: { primary: "var(--acid)", secondary: "var(--on-accent)" } },
+          error: { iconTheme: { primary: "var(--danger)", secondary: "var(--on-accent)" } },
         }}
       />
     </ReduxProvider>
