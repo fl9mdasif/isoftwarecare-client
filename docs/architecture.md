@@ -32,6 +32,9 @@ app/                          # App Router: routes, layouts, metadata
   work/[slug]/page.tsx
   contact/page.tsx
   book/page.tsx               # Cal.com booking page
+  about/page.tsx
+  terms/page.tsx              # content from lib/legal.ts
+  privacy/page.tsx            # content from lib/legal.ts
   not-found.tsx
   error.tsx                   # route-level error boundary
   global-error.tsx            # replaces the layout when the layout itself throws
@@ -50,6 +53,7 @@ components/
   forms/                      # LeadForm
   booking/                    # BookMeeting (popup), CalInline (embed), MeetLogo
   analytics/                  # GA4 / GTM / Meta Pixel, driven by settings
+  legal/                      # LegalDoc: shared Terms/Privacy renderer + auto TOC
 lib/
   api.ts                      # server-side fetchers (Server Components only)
   cloudinary.ts               # URL transform helper
@@ -57,6 +61,7 @@ lib/
   site.ts                     # site constants, nav, Cal link normaliser
   og.tsx                      # shared Open Graph card renderer
   schema.ts                   # JSON-LD builders
+  legal.ts                    # Terms and Privacy copy, as structured sections
   contact.ts                  # settings -> mailto/tel/wa links
   utils.ts                    # cn()
 redux/                        # store, baseApi, endpoint slices (client side)
@@ -151,7 +156,7 @@ TLeadInput    { name, email, phone?, message, serviceInterested? (ObjectId), bud
 | `NEXT_PUBLIC_CAL_ORIGIN` | `https://cal.com` | Only for Cal EU or self-hosted |
 
 No secrets belong here — everything prefixed `NEXT_PUBLIC_` ships to the browser.
-The Plunk keys live in `../server/.env`.
+The mail credentials live in `../server/.env`.
 
 The server's `CLIENT_URL` must include this site's origin, or the browser blocks the lead form with a CORS error.
 
@@ -199,11 +204,22 @@ is absent, otherwise the measurement ID would be registered twice. All tags use
 ## 8c. Lead email (server side)
 
 `POST /leads` persists the lead and then awaits `notifyNewLead`, which sends two
-Plunk emails: an internal alert to `NOTIFY_EMAIL` (reply-to set to the prospect)
-and an auto-reply to the prospect (reply-to set to the agency inbox). The send is
-awaited rather than fire-and-forget because a serverless function can freeze the
-moment the response flushes. `sendMail` never throws, so a mail outage cannot
-turn a captured lead into a 500.
+emails through **Gmail SMTP** (`nodemailer`, `smtp.gmail.com:465`): an internal
+alert to `NOTIFY_EMAIL` (reply-to set to the prospect) and an auto-reply to the
+prospect (reply-to set to the agency inbox). The send is awaited rather than
+fire-and-forget because a serverless function can freeze the moment the response
+flushes. `sendMail` never throws, so a mail outage cannot turn a captured lead
+into a 500.
+
+Credentials are `GMAIL_USER` plus `GMAIL_APP_PASSWORD` — a Google App Password,
+which requires 2-Step Verification on the account. Google displays it in four
+space-separated blocks and people paste it verbatim, so `mailer.ts` strips
+whitespace before using it. `npm run verify:mail` performs a full SMTP handshake
+without sending anything; add `-- --send` to deliver a test message.
+
+Plunk was used first and removed: its `/v1/send` route only accepts a secret key,
+so it could never be called from the browser without publishing that secret, and
+the account's key could not be made to authenticate.
 
 ## 9. Rendering rules
 

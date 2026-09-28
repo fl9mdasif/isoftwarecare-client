@@ -24,8 +24,9 @@ Set these on the host (Vercel → Settings → Environment Variables, or your VP
 | `SUPER_ADMIN_EMAIL` / `SUPER_ADMIN_PASS` | your admin login | Seeds the first admin |
 | `ADMIN_EMAIL` | your inbox | Fallback for lead alerts |
 | **`NOTIFY_EMAIL`** | your inbox | **Where new-lead alerts land.** Falls back to `ADMIN_EMAIL` |
-| **`PLUNK_SECRET_KEY`** | `sk_...` from Plunk | Already moved into `../server/.env` from the client |
-| **`MAIL_FROM`** | e.g. `hello@isoftwarecare.com` | Must be a **verified sender** in Plunk, or leave blank for the Plunk default |
+| **`GMAIL_USER`** | your Gmail address | Account that sends the mail |
+| **`GMAIL_APP_PASSWORD`** | 16-char App Password | Google App Password, **not** the account password |
+| **`MAIL_FROM`** | blank, or a verified Gmail alias | Blank = `GMAIL_USER` |
 | **`MAIL_FROM_NAME`** | `Interactive Software Care` | |
 | `SITE_URL` | `https://isoftwarecare.com` | Used for the API-side `sitemap.xml` |
 | `CLIENT_URL` | `https://isoftwarecare.com,https://www.isoftwarecare.com` | **CORS.** Missing entries = the lead form fails in the browser |
@@ -41,16 +42,19 @@ Set these on the host (Vercel → Settings → Environment Variables, or your VP
 
 ---
 
-## 2. Plunk (transactional email)
+## 2. Email (Gmail SMTP)
 
-- [ ] Create the project at <https://app.useplunk.com>
-- [ ] Verify your sending domain (DNS: DKIM + SPF records Plunk gives you). Unverified = mail lands in spam or is rejected
-- [ ] Copy the **secret** key into `PLUNK_SECRET_KEY` on the server host
-- [ ] Submit one test lead and confirm **both** emails arrive:
-  - internal alert → `NOTIFY_EMAIL`
-  - auto-reply → the address that submitted
+- [ ] Enable **2-Step Verification** on the Gmail account
+- [ ] Create an App Password: myaccount.google.com -> Security -> App passwords
+- [ ] Put it in `GMAIL_APP_PASSWORD` (spaces are stripped automatically)
+- [ ] Run `npm run verify:mail` -> expect **PASS**
+- [ ] Run `npm run verify:mail -- --send` and confirm the test email arrives
+- [ ] Submit a real lead and confirm **both** emails: alert to `NOTIFY_EMAIL`, auto-reply to the sender
 
-If `PLUNK_SECRET_KEY` is unset the site still captures leads; it logs a warning and sends nothing.
+If the credentials are unset the site still captures leads; it logs a warning and
+sends nothing. Gmail's free tier allows roughly 500 messages/day, which is far
+beyond lead volume for this site.
+
 
 ---
 

@@ -1,7 +1,7 @@
 export const SITE = {
   name: "Interactive Software Care",
   shortName: "iSoftwareCare",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://isoftwarecare.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://isoftwarecare.com" || "http://localhost:3000",
   domain: "isoftwarecare.com",
   description:
     "Interactive Software Care is a Dhaka-based software, AI and SaaS engineering partner. Web platforms, mobile apps, custom SaaS and automation, built by one accountable team.",
@@ -15,9 +15,10 @@ export const SITE = {
 
 export const NAV = [
   { href: "/services", label: "Services" },
+  { href: "/about", label: "About" },
   { href: "/#process", label: "Process" },
-  { href: "/work", label: "Work" },
-  { href: "/#clients", label: "Clients" },
+  { href: "/#work", label: "Work" },
+  // { href: "/#clients", label: "Clients" },
   { href: "/contact", label: "Contact" },
 ];
 

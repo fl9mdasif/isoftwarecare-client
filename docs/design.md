@@ -102,7 +102,11 @@ Content (`header`, `main`, `footer`) sits at `z-index: 1` above the aurora.
 | Process spine | Vertical centre spine with 10 step cards alternating left/right (`<ol>` of `<article>`). Each card connects by a horizontal stub to a node dot on the spine. Card: step number (display, accent), stroke icon, uppercase title, one-line description, progress bar (step/10). Per-card accent interpolates acid (01) to violet (10). Equal size cards (380px desktop, 320px tablet), faint grid background. Under 768px the spine moves to the left edge and cards stack full width. |
 | Form field | `--surface-2` background, 1px `--border`, `--radius`. Focus: acid border plus `0 0 0 4px var(--acid-dim)` ring. Label in mono uppercase `--text-dim`. Error text in `#FF6B81`. |
 | Header | Transparent at top; after 24px scroll becomes `rgba(8,9,13,.72)` with 16px backdrop blur and bottom border. Mobile (≤940px): burger opens a full-screen panel with large display links. |
-| Footer | 4 columns (about, services, company, contact), collapses to 2 then 1. Mono bottom bar. |
+| Footer | 4 columns (about, services, company, contact), collapses to 2 then 1. Payment-marks strip above a mono bottom bar carrying copyright, legal links and location. |
+| Principle card | Glass card, 1px border, `--radius-lg`. Acid icon tile (42px, `--surface-2`), title, body. 3 columns, 2 below 1000px, 1 below 640px. Lifts 4px on hover (fine pointers only). |
+| Disciplines list | Two-column list of acid `checkCircle` + label + detail, each row separated by a 1px border. Single column below 760px. |
+| Legal document | Sticky contents card left (268px), numbered sections right. Section numbers in acid mono, `scroll-margin-top: 110px` so anchor jumps clear the header. Bullets are acid 6px squares, not list markers. |
+| Payment mark | 62x40 pill, `--surface-2`, 1px border, holding a 48x30 inline-SVG brand plate. Muted at rest (`opacity .82`, `saturate(.9)`), full strength on hover — six brand palettes at full saturation would otherwise shout over the footer. |
 
 ## 5. Imagery (Cloudinary)
 
@@ -157,7 +161,10 @@ Rules:
 | `/services/[slug]` | Page hero (title, short description), full description, related work, CTA with the service preselected in the form |
 | `/work` | Page hero, category filter chips, work grid |
 | `/work/[slug]` | Case-study hero with thumbnail, meta row (client, category, stack, live link), description, gallery, related testimonial, CTA |
-| `/contact` | Split layout: copy and contact channels left, lead form right |
+| `/contact` | Split layout: copy and contact channels left, lead form right, inline booking calendar below |
+| `/book` | Split layout: what the call covers left, Cal.com calendar right |
+| `/about` | Page hero, story + at-a-glance aside, principles grid, stats, disciplines list, testimonials, CTA |
+| `/terms`, `/privacy` | Sticky contents sidebar left, numbered legal sections right |
 | `not-found` | Short message, ghost button home, same ambient layer |
 
 Page hero (inner pages): eyebrow, h1 at `clamp(2.2rem, 5vw, 3.8rem)`, lead paragraph, top padding `160px` (`130px` on mobile).

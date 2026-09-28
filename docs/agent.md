@@ -65,9 +65,9 @@ JSON-LD via `lib/schema.ts`, settings-driven analytics in `components/analytics/
 `app/error.tsx` + `app/global-error.tsx`, and the Cal.com booking surface
 (`/book`, inline embed on `/contact`, popup in the header).
 
-Server-side companion work: new-lead email through Plunk
+Server-side companion work: new-lead email through Gmail SMTP
 (`server/src/app/utils/mailer.ts`, `modules/lead/notify.lead.ts`), and the API sitemap
 corrected from `/portfolio/*` to `/work/*`.
 
 Still open before launch: everything in `../LAUNCH.md` — real content in the admin,
-production env vars, Plunk domain verification, and the end-to-end lead test.
+production env vars, the Gmail App Password, and the end-to-end lead test.

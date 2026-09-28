@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { TService, TSettings } from "@/types";
 import { SITE } from "@/lib/site";
 import { contactLinks } from "@/lib/contact";
+import { PaymentMarks } from "@/components/ui/PaymentMarks";
 
 export function Footer({ settings, services }: { settings: TSettings; services: TService[] }) {
   const c = contactLinks(settings);
@@ -52,6 +53,9 @@ export function Footer({ settings, services }: { settings: TSettings; services: 
               <li>
                 <Link href="/book">Book a meeting</Link>
               </li>
+              <li>
+                <Link href="/about">About us</Link>
+              </li>
             </ul>
           </div>
           <div>
@@ -82,10 +86,16 @@ export function Footer({ settings, services }: { settings: TSettings; services: 
             </ul>
           </div>
         </div>
+        <PaymentMarks />
+
         <div className="foot-bot">
           <span>
             © {year} {SITE.name}. All rights reserved.
           </span>
+          <nav className="foot-legal" aria-label="Legal">
+            <Link href="/terms">Terms &amp; Conditions</Link>
+            <Link href="/privacy">Privacy Policy</Link>
+          </nav>
           <span>Built in Dhaka.</span>
         </div>
       </div>
