@@ -43,7 +43,9 @@ export default async function HomePage() {
 
       <Pipeline />
 
-      <section className="section" id="work">
+
+      {/* projects  */}
+      {/* <section className="section" id="work">
         <div className="wrap">
           <div className="sec-head-row">
             <SectionHead
@@ -58,7 +60,7 @@ export default async function HomePage() {
           </div>
           <ProjectStack items={featured.slice(0, 5)} />
         </div>
-      </section>
+      </section> */}
 
       <Stats
         items={[
