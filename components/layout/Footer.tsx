@@ -1,0 +1,94 @@
+import Link from "next/link";
+import type { TService, TSettings } from "@/types";
+import { SITE } from "@/lib/site";
+import { contactLinks } from "@/lib/contact";
+
+export function Footer({ settings, services }: { settings: TSettings; services: TService[] }) {
+  const c = contactLinks(settings);
+  const year = new Date().getFullYear();
+
+  return (
+    <footer>
+      <div className="wrap">
+        <div className="foot-grid">
+          <div className="foot-about">
+            <Link href="/" className="brand">
+              <span className="brand-mark" aria-hidden="true" />
+              {SITE.name}
+            </Link>
+            <p>
+              A software, AI and SaaS engineering partner based in Dhaka, building for clients across e-commerce,
+              logistics and education.
+            </p>
+          </div>
+          <div>
+            <h2>Services</h2>
+            <ul>
+              {services.slice(0, 6).map((s) => (
+                <li key={s._id}>
+                  <Link href={`/services/${s.slug}`}>{s.title}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h2>Company</h2>
+            <ul>
+              <li>
+                <Link href="/services">Services</Link>
+              </li>
+              <li>
+                <Link href="/#process">Process</Link>
+              </li>
+              <li>
+                <Link href="/work">Work</Link>
+              </li>
+              <li>
+                <Link href="/#clients">Clients</Link>
+              </li>
+              <li>
+                <Link href="/contact">Contact</Link>
+              </li>
+              <li>
+                <Link href="/book">Book a meeting</Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h2>Contact</h2>
+            <ul>
+              {c.email && (
+                <li>
+                  <a href={c.email.href}>{c.email.label}</a>
+                </li>
+              )}
+              {c.phone && (
+                <li>
+                  <a href={c.phone.href}>{c.phone.label}</a>
+                </li>
+              )}
+              {c.socials.map((s) => (
+                <li key={s.url}>
+                  <a href={s.url} target="_blank" rel="noopener noreferrer">
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+              {c.address && (
+                <li>
+                  <span>{c.address}</span>
+                </li>
+              )}
+            </ul>
+          </div>
+        </div>
+        <div className="foot-bot">
+          <span>
+            © {year} {SITE.name}. All rights reserved.
+          </span>
+          <span>Built in Dhaka.</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
