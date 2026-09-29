@@ -1,5 +1,21 @@
 import { ImageResponse } from "next/og";
+import fs from "node:fs";
+import path from "node:path";
 import { SITE } from "./site";
+
+/**
+ * The brand mark, inlined as a data URI.
+ *
+ * Uses the plated variant because these cards are dark: the bare navy logo is
+ * 1.31:1 against this background and all but disappears in a link preview.
+ *
+ * Read once at module load rather than fetched per render — an OG card that
+ * depends on a network request fails intermittently, and each crawler only
+ * generates the preview once.
+ */
+const LOGO = `data:image/png;base64,${fs
+  .readFileSync(path.join(process.cwd(), "app/assets/logo-images/derived/mark-plate.png"))
+  .toString("base64")}`;
 
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_CONTENT_TYPE = "image/png";
@@ -36,20 +52,9 @@ export function renderOgImage({ eyebrow, title, description }: OgInput) {
             "radial-gradient(900px 500px at 78% -10%, rgba(108,92,255,0.30), transparent 60%), radial-gradient(760px 460px at 4% 108%, rgba(46,230,197,0.22), transparent 62%)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <div
-            style={{
-              width: 52,
-              height: 52,
-              borderRadius: 15,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundImage: "linear-gradient(135deg, #6C5CFF, #2EE6C5)",
-            }}
-          >
-            <div style={{ width: 18, height: 18, borderRadius: 5, background: "#06070A" }} />
-          </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={LOGO} width={56} height={56} alt="" />
           <div style={{ color: "#F4F6FA", fontSize: 26, fontWeight: 700, letterSpacing: -0.5 }}>{SITE.name}</div>
         </div>
 

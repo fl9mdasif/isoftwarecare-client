@@ -505,21 +505,28 @@ body.gsap-ready .reveal {
   font-size: 1.02rem;
   letter-spacing: -0.02em;
 }
-.brand-mark {
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
-  background: linear-gradient(135deg, var(--violet), var(--acid));
+.logo-mark {
+  position: relative;
+  display: block;
   flex-shrink: 0;
-  display: grid;
-  place-items: center;
 }
-.brand-mark::after {
-  content: "";
-  width: 11px;
-  height: 11px;
-  border-radius: 3px;
-  background: var(--bg);
+.logo-mark img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* Both variants ship; the theme decides which is visible, so the correct mark
+   is already in the HTML when ThemeScript sets the theme before first paint. */
+.logo-on-light {
+  opacity: 0;
+}
+:root[data-theme="light"] .logo-on-dark {
+  opacity: 0;
+}
+:root[data-theme="light"] .logo-on-light {
+  opacity: 1;
 }
 .nav-links {
   display: flex;

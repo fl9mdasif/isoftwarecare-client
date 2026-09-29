@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { NAV, SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/ui/Icon";
+import { Logo } from "@/components/ui/Logo";
 import { BookMeeting } from "@/components/booking/BookMeeting";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
@@ -37,7 +38,7 @@ export function Header() {
         <div className="wrap">
           <nav className="site-nav" aria-label="Primary">
             <Link href="/" className="brand" onClick={() => setOpen(false)}>
-              <span className="brand-mark" aria-hidden="true" />
+              <Logo />
               {SITE.name}
             </Link>
             <div className="nav-links">

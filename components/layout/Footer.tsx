@@ -3,6 +3,7 @@ import type { TService, TSettings } from "@/types";
 import { SITE } from "@/lib/site";
 import { contactLinks } from "@/lib/contact";
 import { PaymentMarks } from "@/components/ui/PaymentMarks";
+import { Logo } from "@/components/ui/Logo";
 
 export function Footer({ settings, services }: { settings: TSettings; services: TService[] }) {
   const c = contactLinks(settings);
@@ -14,7 +15,7 @@ export function Footer({ settings, services }: { settings: TSettings; services: 
         <div className="foot-grid">
           <div className="foot-about">
             <Link href="/" className="brand">
-              <span className="brand-mark" aria-hidden="true" />
+              <Logo />
               {SITE.name}
             </Link>
             <p>
