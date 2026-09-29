@@ -5,6 +5,7 @@ import { LeadForm } from "@/components/forms/LeadForm";
 import { Motion } from "@/components/motion/Motion";
 import { PageHero } from "@/components/sections/PageHero";
 import { Icon } from "@/components/ui/Icon";
+import { LocationMap } from "@/components/ui/LocationMap";
 import { getServices, getSettings } from "@/lib/api";
 import { contactLinks } from "@/lib/contact";
 import { CAL, pageOg } from "@/lib/site";
@@ -88,6 +89,7 @@ export default async function ContactPage({ searchParams }: Props) {
                 </li>
               ))}
             </ul>
+            <LocationMap />
           </div>
 
           <div className="reveal">

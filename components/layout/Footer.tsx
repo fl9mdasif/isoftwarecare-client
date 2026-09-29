@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { TService, TSettings } from "@/types";
 import { SITE } from "@/lib/site";
 import { contactLinks } from "@/lib/contact";
-import { PaymentMarks } from "@/components/ui/PaymentMarks";
 import { Logo } from "@/components/ui/Logo";
+import { Icon } from "@/components/ui/Icon";
 
 export function Footer({ settings, services }: { settings: TSettings; services: TService[] }) {
   const c = contactLinks(settings);
@@ -43,9 +43,6 @@ export function Footer({ settings, services }: { settings: TSettings; services: 
                 <Link href="/#process">Process</Link>
               </li>
               <li>
-                <Link href="/work">Work</Link>
-              </li>
-              <li>
                 <Link href="/#clients">Clients</Link>
               </li>
               <li>
@@ -61,33 +58,52 @@ export function Footer({ settings, services }: { settings: TSettings; services: 
           </div>
           <div>
             <h2>Contact</h2>
-            <ul>
+            
+            {c.address && (
+              <p className="foot-address">
+                <Icon name="pin" />
+                {c.address}
+              </p>
+            )}
+            {/* Icon-only row: value text is dropped here on purpose (the label
+                is still on the aside channel list on /contact) so this stays a
+                compact row. Icon itself is aria-hidden, so the accessible name
+                for each link comes from aria-label, not from visible text. */}
+            <ul className="foot-icons">
               {c.email && (
                 <li>
-                  <a href={c.email.href}>{c.email.label}</a>
+                  <a href={c.email.href} aria-label={`Email: ${c.email.label}`} title={c.email.label}>
+                    <Icon name="mail" />
+                  </a>
                 </li>
               )}
-              {c.phone && (
+              {c.whatsapp && (
                 <li>
-                  <a href={c.phone.href}>{c.phone.label}</a>
+                  <a
+                    href={c.whatsapp.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Chat with us on WhatsApp"
+                    title="WhatsApp"
+                  >
+                    <Icon name="whatsapp" />
+                  </a>
                 </li>
               )}
               {c.socials.map((s) => (
                 <li key={s.url}>
-                  <a href={s.url} target="_blank" rel="noopener noreferrer">
-                    {s.label}
+                  <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={s.platform} title={s.platform}>
+                    <Icon name={s.icon} />
                   </a>
                 </li>
               ))}
-              {c.address && (
-                <li>
-                  <span>{c.address}</span>
-                </li>
-              )}
             </ul>
+            <Link href="/contact" className="btn btn-ghost btn-sm foot-contact-btn">
+              Contact us
+              <Icon name="arrow" strokeWidth={2} />
+            </Link>
           </div>
         </div>
-        <PaymentMarks />
 
         <div className="foot-bot">
           <span>
@@ -97,8 +113,8 @@ export function Footer({ settings, services }: { settings: TSettings; services: 
             <Link href="/terms">Terms &amp; Conditions</Link>
             <Link href="/privacy">Privacy Policy</Link>
           </nav>
-          <span>Built in Dhaka.</span>
         </div>
+        <div className="foot-addr">Mirpur - 1, Dhaka, Bangladesh</div>
       </div>
     </footer>
   );

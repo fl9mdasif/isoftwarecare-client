@@ -43,6 +43,8 @@
   --tint-2: rgba(255, 255, 255, 0.012);
   --tint-3: rgba(255, 255, 255, 0.015);
   --tint-4: rgba(255, 255, 255, 0.04);
+  /* The hero "terminal" box, an inset well against the glass panel. */
+  --term-bg: rgba(0, 0, 0, 0.28);
   --grid-line: rgba(255, 255, 255, 0.03);
   --dot-pattern: rgba(255, 255, 255, 0.5);
   --shadow-card: none;
@@ -102,6 +104,7 @@
   --tint-2: rgba(16, 22, 38, 0.02);
   --tint-3: rgba(16, 22, 38, 0.025);
   --tint-4: rgba(16, 22, 38, 0.045);
+  --term-bg: rgba(16, 22, 38, 0.05);
   --grid-line: rgba(16, 22, 38, 0.05);
   --dot-pattern: rgba(16, 22, 38, 0.16);
   --shadow-card: 0 1px 2px rgba(16, 22, 38, 0.05), 0 10px 28px rgba(16, 22, 38, 0.07);
@@ -756,7 +759,7 @@ body.gsap-ready .reveal {
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 16px 18px;
-  background: rgba(0, 0, 0, 0.28);
+  background: var(--term-bg);
   overflow-wrap: anywhere;
 }
 .term .k {
@@ -2451,6 +2454,57 @@ select.input option {
   display: none;
 }
 
+/* ---------- location map ---------- */
+.map-card {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface);
+  aspect-ratio: 16 / 11;
+  min-height: 260px;
+  margin-top: 22px;
+}
+.map-card iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  /* Google's free embed has no dark variant. Inverting + rotating the hue
+     back gives a passable dark map instead of a bright white rectangle
+     sitting on the page background. */
+  filter: invert(90%) hue-rotate(180deg) brightness(0.94) contrast(0.92);
+}
+:root[data-theme="light"] .map-card iframe {
+  filter: none;
+}
+.map-open {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: border-color 0.2s, color 0.2s;
+}
+.map-open svg {
+  width: 14px;
+  height: 14px;
+}
+.map-open:hover {
+  border-color: var(--acid);
+  color: var(--acid);
+}
+
 /* ---------- about ---------- */
 .principles {
   list-style: none;
@@ -2801,6 +2855,58 @@ footer {
 .foot-grid li a:hover {
   color: var(--acid);
 }
+/* The office address line, text only, no link. */
+.foot-address {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.89rem;
+  color: var(--text-mid);
+  margin-bottom: 18px;
+}
+.foot-address svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--text-dim);
+}
+/* Icon-only row: email, WhatsApp, socials. No visible label — each link's
+   accessible name comes from aria-label since the icon itself is aria-hidden. */
+.foot-icons {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  /* justify-content:center ; */
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  /* margin-bottom: 4px; */
+}
+.foot-icons a {
+  display: flex;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-dim);
+  line-height: 0;
+  transition: color 0.2s, border-color 0.2s, transform 0.2s var(--ease);
+}
+.foot-icons a:hover {
+  color: var(--acid);
+  border-color: var(--acid);
+  transform: translateY(-2px);
+}
+.foot-icons svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  display: block;
+}
 .foot-legal {
   display: flex;
   gap: 20px;
@@ -2823,6 +2929,23 @@ footer {
   gap: 12px;
   font-family: var(--mono);
   font-size: 0.72rem;
+  color: var(--text-dim);
+}
+/* Contact CTA sits under the icon rows, not inline with them — it is an
+   action, not another list item. */
+.foot-contact-btn {
+  margin-top: 18px;
+}
+/* The physical address, set once here rather than pulled from admin settings:
+   it is the literal registered address and must not change if someone edits
+   officeAddress for the on-page contact chip. Sits below the copyright bar,
+   the last line on every page. */
+.foot-addr {
+  margin-top: 14px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
   color: var(--text-dim);
 }
 
