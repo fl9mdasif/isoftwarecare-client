@@ -7,6 +7,8 @@ import { Pipeline } from "@/components/sections/Pipeline";
 import { ServicesGrid } from "@/components/sections/ServiceCard";
 import { Stats } from "@/components/sections/Stats";
 import { Testimonials } from "@/components/sections/Testimonials";
+import { ProjectStack } from "@/components/sections/ProjectStack";
+import { Icon } from "@/components/ui/Icon";
 import { SectionHead } from "@/components/ui/SectionHead";
 import { getPortfolio, getServices, getSettings, getTestimonials } from "@/lib/api";
 import { categoryName } from "@/lib/utils";
