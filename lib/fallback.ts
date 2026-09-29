@@ -25,7 +25,7 @@ export const FALLBACK_SERVICES: TService[] = [
     "web-development",
     "web",
     "Web Development",
-    "Business sites, landing pages and web platforms built for real traffic, not demo day. Fast, indexed, easy to update, and handed over with documentation instead of a mystery codebase.",
+    "Dynamic, 3D, Custom Business sites, landing pages and web platforms built for real traffic, not demo day. Fast, indexed, easy to update, and handed over with documentation instead of a mystery codebase.",
     "We build marketing sites, landing pages and full web platforms on a modern stack (Next.js, Node, Postgres or MongoDB).\n\nEvery build ships with performance budgets, technical SEO, analytics wired in, and a CMS or admin panel so your team can update content without calling us. You get the repository, the documentation and the deployment, not a black box.",
   ),
   svc(
@@ -127,8 +127,8 @@ export const FALLBACK_PORTFOLIO: TPortfolioItem[] = [
 export const FALLBACK_TESTIMONIALS: TTestimonial[] = [
   {
     _id: "fallback-t1",
-    clientName: "Operations Lead",
-    clientCompany: "E-commerce client",
+    clientName: "Abu Baker",
+    clientCompany: "CEO, Hydraazone",
     quote: "They rebuilt our order flow in three phases and tested each one before moving on. Zero surprises at launch.",
     rating: 5,
     isApproved: true,
@@ -136,8 +136,8 @@ export const FALLBACK_TESTIMONIALS: TTestimonial[] = [
   },
   {
     _id: "fallback-t2",
-    clientName: "Founder",
-    clientCompany: "Logistics startup",
+    clientName: "Razu Ahmed",
+    clientCompany: "Founder, Sultan Bazar",
     quote: "Finally a dev team that explains the tradeoffs instead of just saying yes to everything.",
     rating: 5,
     isApproved: true,

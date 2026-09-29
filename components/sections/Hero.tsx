@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 import { SITE } from "@/lib/site";
 
-const LINES = ["We build the", "software your", "business"];
-const GRAD_LINE = "actually needs";
+const LINES = ["WE BUILD SOFTWARE", "YOUR BUSINESS"];
+const GRAD_LINE = "ACTUALLY NEEDS";
 
 const TERM = [
   ["web", "sites · e-commerce · platforms"],
@@ -38,8 +38,7 @@ export function Hero({ projects, specialists = 6 }: { projects: number; speciali
             </span>
           </h1>
           <p className="hero-sub" data-fade>
-            A Dhaka-based product and engineering team. Web platforms, e-commerce, mobile apps, custom SaaS and the
-            automation that ties it together, delivered by one accountable team instead of three outsourced ones.
+          A product and engineering team building web platforms, e-commerce, mobile apps, custom SaaS and AI automation. One accountable team from first sketch to launch, instead of three outsourced ones. Based in Dhaka, working with clients worldwide.
           </p>
           <div className="hero-cta" data-fade>
             <Link href="/contact" className="btn btn-solid">

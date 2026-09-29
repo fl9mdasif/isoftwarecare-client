@@ -1,4 +1,4 @@
-import { CldImg } from "@/components/ui/CldImg";
+// import { CldImg } from "@/components/ui/CldImg";
 import { Icon } from "@/components/ui/Icon";
 import { SectionHead } from "@/components/ui/SectionHead";
 import type { TTestimonial } from "@/types";
@@ -28,9 +28,9 @@ export function TestimonialCard({ t }: { t: TTestimonial }) {
         <p>&ldquo;{t.quote}&rdquo;</p>
       </blockquote>
       <figcaption className="testi-by">
-        <span className="av">
+        {/* <span className="av">
           {t.photo ? <CldImg src={t.photo} alt="" w={96} h={96} crop="thumb" gravity="face" sizes="38px" /> : null}
-        </span>
+        </span> */}
         <div>
           <b>{t.clientName}</b>
           {byline && <span>{byline}</span>}

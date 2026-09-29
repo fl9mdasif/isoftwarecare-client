@@ -652,7 +652,7 @@ body.gsap-ready .reveal {
   }
 }
 .hero h1 {
-  font-size: clamp(2.5rem, 6.2vw, 4.7rem);
+  font-size: clamp(2.5rem, 6.2vw, 4.0rem);
   letter-spacing: -0.04em;
   line-height: 1;
   perspective: 800px;
@@ -2461,9 +2461,9 @@ select.input option {
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--surface);
-  aspect-ratio: 16 / 11;
-  min-height: 260px;
-  margin-top: 22px;
+  width: 100%;
+  height: 300px;
+  margin-top: 40px;
 }
 .map-card iframe {
   width: 100%;
@@ -2878,7 +2878,7 @@ footer {
   justify-items: center;
   /* justify-content:center ; */
   flex-wrap: wrap;
-  gap: 10px;
+  /* gap: 4px; */
   list-style: none;
   padding: 0;
   /* margin-bottom: 4px; */
@@ -2889,10 +2889,10 @@ footer {
   width: 38px;
   height: 38px;
   flex-shrink: 0;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text-dim);
+  /* border-radius: 999px; */
+  /* border: 1px solid var(--border); */
+  /* background: var(--surface); */
+  /* color: var(--text-dim); */
   line-height: 0;
   transition: color 0.2s, border-color 0.2s, transform 0.2s var(--ease);
 }
@@ -2934,7 +2934,7 @@ footer {
 /* Contact CTA sits under the icon rows, not inline with them — it is an
    action, not another list item. */
 .foot-contact-btn {
-  margin-top: 18px;
+  /* margin-top: 1px; */
 }
 /* The physical address, set once here rather than pulled from admin settings:
    it is the literal registered address and must not change if someone edits

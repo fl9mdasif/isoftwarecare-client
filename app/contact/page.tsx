@@ -26,7 +26,7 @@ export default async function ContactPage({ searchParams }: Props) {
 
   const channels = [
     c.email && { icon: "mail", label: "Email", value: c.email.label, href: c.email.href },
-    c.whatsapp && { icon: "whatsapp", label: "WhatsApp", value: c.whatsapp.label, href: c.whatsapp.href, external: true },
+    // c.whatsapp && { icon: "whatsapp", label: "WhatsApp", value: c.whatsapp.label, href: c.whatsapp.href, external: true },
     c.phone && { icon: "phone", label: "Phone", value: c.phone.label, href: c.phone.href },
   ].filter(Boolean) as { icon: string; label: string; value: string; href: string; external?: boolean }[];
 
@@ -89,13 +89,13 @@ export default async function ContactPage({ searchParams }: Props) {
                 </li>
               ))}
             </ul>
-            <LocationMap />
           </div>
 
           <div className="reveal">
             <LeadForm services={services.map((s) => ({ id: s._id, title: s.title }))} defaultServiceId={preselected} />
           </div>
         </div>
+       
       </section>
 
       {CAL.link && (
@@ -112,6 +112,13 @@ export default async function ContactPage({ searchParams }: Props) {
           </div>
         </section>
       )}
+
+      <section className="section flush-top">
+        <div className="wrap">
+          <LocationMap />
+        </div>
+      </section>
+
       <Motion />
     </>
   );

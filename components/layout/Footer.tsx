@@ -19,14 +19,13 @@ export function Footer({ settings, services }: { settings: TSettings; services: 
               {SITE.name}
             </Link>
             <p>
-              A software, AI and SaaS engineering partner based in Dhaka, building for clients across e-commerce,
-              logistics and education.
+              A software team building custom websites, e-commerce platforms, mobile apps, SaaS products and AI chatbots for businesses worldwide.
             </p>
           </div>
           <div>
             <h2>Services</h2>
             <ul>
-              {services.slice(0, 6).map((s) => (
+              {services.slice(0, 8).map((s) => (
                 <li key={s._id}>
                   <Link href={`/services/${s.slug}`}>{s.title}</Link>
                 </li>
@@ -43,22 +42,19 @@ export function Footer({ settings, services }: { settings: TSettings; services: 
                 <Link href="/#process">Process</Link>
               </li>
               <li>
-                <Link href="/#clients">Clients</Link>
-              </li>
-              <li>
                 <Link href="/contact">Contact</Link>
               </li>
               <li>
-                <Link href="/book">Book a meeting</Link>
+                <Link href="/about">About us</Link>
               </li>
               <li>
-                <Link href="/about">About us</Link>
+                <Link href="/book">Book a meeting</Link>
               </li>
             </ul>
           </div>
           <div>
             <h2>Contact</h2>
-            
+
             {c.address && (
               <p className="foot-address">
                 <Icon name="pin" />
@@ -70,13 +66,7 @@ export function Footer({ settings, services }: { settings: TSettings; services: 
                 compact row. Icon itself is aria-hidden, so the accessible name
                 for each link comes from aria-label, not from visible text. */}
             <ul className="foot-icons">
-              {c.email && (
-                <li>
-                  <a href={c.email.href} aria-label={`Email: ${c.email.label}`} title={c.email.label}>
-                    <Icon name="mail" />
-                  </a>
-                </li>
-              )}
+
               {c.whatsapp && (
                 <li>
                   <a
@@ -90,6 +80,9 @@ export function Footer({ settings, services }: { settings: TSettings; services: 
                   </a>
                 </li>
               )}
+
+
+
               {c.socials.map((s) => (
                 <li key={s.url}>
                   <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={s.platform} title={s.platform}>
@@ -97,8 +90,16 @@ export function Footer({ settings, services }: { settings: TSettings; services: 
                   </a>
                 </li>
               ))}
+
+              {c.email && (
+                <li>
+                  <a href={c.email.href} aria-label={`Email: ${c.email.label}`} title={c.email.label}>
+                    <Icon name="mail" />
+                  </a>
+                </li>
+              )}
             </ul>
-            <Link href="/contact" className="btn btn-ghost btn-sm foot-contact-btn">
+            <Link href="/contact" className="btn btn-ghost btn-sm  foot-contact-btn">
               Contact us
               <Icon name="arrow" strokeWidth={2} />
             </Link>
@@ -114,7 +115,6 @@ export function Footer({ settings, services }: { settings: TSettings; services: 
             <Link href="/privacy">Privacy Policy</Link>
           </nav>
         </div>
-        <div className="foot-addr">Mirpur - 1, Dhaka, Bangladesh</div>
       </div>
     </footer>
   );
