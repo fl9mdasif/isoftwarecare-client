@@ -17,7 +17,26 @@ const TERM = [
 const chars = (text: string) =>
   text.split("").map((ch, i) => (
     <span key={i} className="char">
-      {ch === " " ? " " : ch}
+      {ch === " " ? " " : ch}
+    </span>
+  ));
+
+/**
+ * Groups a line's characters by word before wrapping lands on them.
+ *
+ * Each char is its own inline-block span (so GSAP can animate it individually),
+ * but with nothing marking word boundaries, the browser treats every single
+ * character as an equally valid break point — on a narrow phone it can wrap
+ * mid-word ("SOFTWAR" / "E") instead of between words. Wrapping each word's
+ * characters in their own inline-block with `white-space: nowrap` (see
+ * `.hero h1 .word` in globals.css) makes a word one atomic unit again, so a
+ * forced wrap can only fall on an actual space.
+ */
+const words = (text: string) =>
+  text.split(" ").map((word, i, arr) => (
+    <span key={i} className="word">
+      {chars(word)}
+      {i < arr.length - 1 ? <span className="char"> </span> : null}
     </span>
   ));
 
@@ -30,7 +49,7 @@ export function Hero({ projects, specialists = 6 }: { projects: number; speciali
           <h1 id="hero-title" aria-label={`${LINES.join(" ")} ${GRAD_LINE}`}>
             {LINES.map((l) => (
               <span key={l} className="line" aria-hidden="true">
-                {chars(l)}
+                {words(l)}
               </span>
             ))}
             <span className="line" aria-hidden="true">
@@ -38,7 +57,9 @@ export function Hero({ projects, specialists = 6 }: { projects: number; speciali
             </span>
           </h1>
           <p className="hero-sub" data-fade>
-          A product and engineering team building web platforms, e-commerce, mobile apps, custom SaaS and AI automation. One accountable team from first sketch to launch, instead of three outsourced ones. Based in Dhaka, working with clients worldwide.
+            A product and engineering team building web platforms, e-commerce, mobile apps, custom SaaS and AI
+            automation. One accountable team from first sketch to launch, instead of three outsourced ones. Based in
+            Dhaka, working with clients worldwide.
           </p>
           <div className="hero-cta" data-fade>
             <Link href="/contact" className="btn btn-solid">

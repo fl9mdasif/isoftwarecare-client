@@ -652,16 +652,33 @@ body.gsap-ready .reveal {
   }
 }
 .hero h1 {
-  font-size: clamp(2.5rem, 6.2vw, 4.0rem);
+  font-size: clamp(2.1rem, 6.2vw, 4.0rem);
   letter-spacing: -0.04em;
   line-height: 1;
   perspective: 800px;
 }
+@media (max-width: 420px) {
+  .hero h1 {
+    /* A little smaller still on narrow phones, as asked — the structural
+       word-wrap fix below is what actually stops a word tearing mid-wrap;
+       this is just sizing on top of that. */
+    font-size: clamp(1.85rem, 8.6vw, 2.2rem);
+  }
+}
 .hero h1 .line {
-  display: block;
   overflow: hidden;
   padding-bottom: 0.09em;
   margin-bottom: -0.09em;
+  /* Not display:block any more: a word that wraps now needs the line box to
+     grow to two rows, which block/overflow-hidden already allows (height is
+     auto unless constrained) — flow/wrap is what changed, not the box type. */
+}
+.hero h1 .word {
+  /* One atomic unit per word: a browser never breaks inside an inline-block,
+     so when the line doesn't fit, the only place left to wrap is the real
+     space between two .word spans — never mid-character. */
+  display: inline-block;
+  white-space: nowrap;
 }
 .hero h1 .char {
   display: inline-block;
