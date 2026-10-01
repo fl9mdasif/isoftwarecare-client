@@ -655,6 +655,7 @@ body.gsap-ready .reveal {
   font-size: clamp(2.1rem, 6.2vw, 4.0rem);
   letter-spacing: -0.04em;
   line-height: 1;
+  /* word-spacing: 1em; */
   perspective: 800px;
 }
 @media (max-width: 420px) {
@@ -663,6 +664,8 @@ body.gsap-ready .reveal {
        word-wrap fix below is what actually stops a word tearing mid-wrap;
        this is just sizing on top of that. */
     font-size: clamp(1.85rem, 8.6vw, 2.2rem);
+    /* word-spacing: 2em; */
+
   }
 }
 .hero h1 .line {
