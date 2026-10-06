@@ -31,14 +31,24 @@ const chars = (text: string) =>
  * characters in their own inline-block with `white-space: nowrap` (see
  * `.hero h1 .word` in globals.css) makes a word one atomic unit again, so a
  * forced wrap can only fall on an actual space.
+ *
+ * The space between two words is a plain text node sitting BETWEEN the two
+ * `.word` boxes, not a char glued onto the end of one. A space placed as the
+ * last child inside an inline-block gets collapsed to zero width by the
+ * browser's own whitespace trimming (it's trailing whitespace at a box edge)
+ * — which is exactly why that earlier version rendered with no visible gap
+ * between words. A bare space between two independent inline-block elements
+ * is not at an edge, so it renders and remains a valid wrap point.
  */
 const words = (text: string) =>
-  text.split(" ").map((word, i, arr) => (
-    <span key={i} className="word">
-      {chars(word)}
-      {i < arr.length - 1 ? <span className="char"> </span> : null}
-    </span>
-  ));
+  text.split(" ").flatMap((word, i, arr) => {
+    const w = (
+      <span key={i} className="word">
+        {chars(word)}
+      </span>
+    );
+    return i < arr.length - 1 ? [w, " "] : [w];
+  });
 
 export function Hero({ projects, specialists = 6 }: { projects: number; specialists?: number }) {
   return (
