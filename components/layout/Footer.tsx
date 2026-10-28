@@ -21,7 +21,53 @@ export function Footer({ settings, services }: { settings: TSettings; services: 
             <p>
               A software team building custom websites, e-commerce platforms, mobile apps, SaaS products and AI chatbots for businesses worldwide.
             </p>
+
+            {/* WP + FB icon only */}
+            <ul className="foot-icons">
+              {c.whatsapp && (
+                <li>
+                  <a
+                    href={c.whatsapp.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Chat with us on WhatsApp"
+                    title="WhatsApp"
+                  >
+                    <Icon name="whatsapp" />
+                  </a>
+                </li>
+              )}
+              {c.socials
+                .filter((s) => s.platform.toLowerCase() === "facebook")
+                .map((s) => (
+                  <li key={s.url}>
+                    <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={s.platform} title={s.platform}>
+                      <Icon name={s.icon} />
+                    </a>
+                  </li>
+                ))}
+            </ul>
+
+            {/* Email icon + text */}
+            <a href="mailto:hello@isoftwarecare.com" className="foot-contact-row">
+              <Icon name="mail" />
+              hello@isoftwarecare.com
+            </a>
+
+            {/* Location */}
+            {c.address && (
+              <p className="foot-contact-row">
+                <Icon name="pin" />
+                {c.address}
+              </p>
+            )}
+
+            <Link href="/contact" className="btn btn-ghost btn-sm foot-contact-btn">
+              Contact us
+              <Icon name="arrow" strokeWidth={2} />
+            </Link>
           </div>
+
           <div>
             <h2>Services</h2>
             <ul>
@@ -51,58 +97,6 @@ export function Footer({ settings, services }: { settings: TSettings; services: 
                 <Link href="/book">Book a meeting</Link>
               </li>
             </ul>
-          </div>
-          <div>
-            <h2>Contact</h2>
-
-            {c.address && (
-              <p className="foot-address">
-                <Icon name="pin" />
-                {c.address}
-              </p>
-            )}
-            {/* Icon-only row: value text is dropped here on purpose (the label
-                is still on the aside channel list on /contact) so this stays a
-                compact row. Icon itself is aria-hidden, so the accessible name
-                for each link comes from aria-label, not from visible text. */}
-            <ul className="foot-icons">
-
-              {c.whatsapp && (
-                <li>
-                  <a
-                    href={c.whatsapp.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Chat with us on WhatsApp"
-                    title="WhatsApp"
-                  >
-                    <Icon name="whatsapp" />
-                  </a>
-                </li>
-              )}
-
-
-
-              {c.socials.map((s) => (
-                <li key={s.url}>
-                  <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={s.platform} title={s.platform}>
-                    <Icon name={s.icon} />
-                  </a>
-                </li>
-              ))}
-
-              {c.email && (
-                <li>
-                  <a href={c.email.href} aria-label={`Email: ${c.email.label}`} title={c.email.label}>
-                    <Icon name="mail" />
-                  </a>
-                </li>
-              )}
-            </ul>
-            <Link href="/contact" className="btn btn-ghost btn-sm  foot-contact-btn">
-              Contact us
-              <Icon name="arrow" strokeWidth={2} />
-            </Link>
           </div>
         </div>
 

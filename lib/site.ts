@@ -5,7 +5,7 @@ export const SITE = {
   domain: "isoftwarecare.com",
   description:
     "Interactive Software Care is a Dhaka-based software, AI and SaaS engineering partner. Web platforms, mobile apps, custom SaaS and automation, built by one accountable team.",
-  email: "interactivesoftwarecare@gmail.com",
+  email: "hello@isoftwarecare.com",
   phone: "+880 1746 818461",
   phoneDisplay: "+880 1746 818461",
   whatsapp: "+880 1746 818461",
